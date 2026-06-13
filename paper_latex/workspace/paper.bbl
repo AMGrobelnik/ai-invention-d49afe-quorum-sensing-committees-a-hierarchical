@@ -1,0 +1,128 @@
+\begin{thebibliography}{17}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Pla()]{PlattScaling}
+Platt scaling.
+\newblock \url{https://en.wikipedia.org/wiki/Platt_scaling}.
+\newblock Wikipedia.
+
+\bibitem[Alifeus(2025)]{Stigmergy2025}
+Keep Alifeus.
+\newblock Stigmergy pattern for multi-agent llm systems: 80\% token reduction.
+\newblock
+  \url{https://dev.to/keepalifeus/stigmergy-pattern-for-multi-agent-llm-systems-80-token-reduction-2lc9},
+  2025.
+
+\bibitem[Chauvin et~al.(2025)Chauvin, Merrer, Taïani, and
+  Trédan]{Chauvin2025}
+Timothée Chauvin, E.~L. Merrer, F.~Taïani, and Gilles Trédan.
+\newblock Log probability tracking of llm apis.
+\newblock \emph{ArXiv}, abs/2512.03816, 2025.
+\newblock \doi{10.48550/arXiv.2512.03816}.
+
+\bibitem[Du et~al.(2023)Du, Li, Torralba, Tenenbaum, and Mordatch]{Du2023}
+Yilun Du, Shuang Li, A.~Torralba, J.~Tenenbaum, and Igor Mordatch.
+\newblock Improving factuality and reasoning in language models through
+  multiagent debate.
+\newblock In \emph{International Conference on Machine Learning}, pages
+  11733--11763, 2023.
+\newblock \doi{10.48550/arXiv.2305.14325}.
+
+\bibitem[Grass{\'e}(1959)]{Grasse1959}
+Pierre-Paul Grass{\'e}.
+\newblock La reconstruction du nid et les coordinations interindividuelles chez
+  bellicositermes natalensis et cubitermes sp.
+\newblock In \emph{Insectes Sociaux}, volume~6, pages 41--80, 1959.
+
+\bibitem[Jain et~al.(2025)Jain, Ahmed, Sahai, and Leong]{Jain2025}
+Suryaansh Jain, Umair~Z. Ahmed, Shubham Sahai, and Ben Leong.
+\newblock Beyond consensus: Mitigating the agreeableness bias in llm judge
+  evaluations.
+\newblock \emph{ArXiv}, abs/2510.11822, 2025.
+\newblock \doi{10.48550/arXiv.2510.11822}.
+
+\bibitem[Liang et~al.(2023)Liang, He, Jiao, Wang, Wang, Wang, Yang, Tu, and
+  Shi]{Liang2023}
+Tian Liang, Zhiwei He, Wenxiang Jiao, Xing Wang, Yan Wang, Rui Wang, Yujiu
+  Yang, Zhaopeng Tu, and Shuming Shi.
+\newblock Encouraging divergent thinking in large language models through
+  multi-agent debate.
+\newblock In \emph{Conference on Empirical Methods in Natural Language
+  Processing}, pages 17889--17904, 2023.
+\newblock \doi{10.48550/arXiv.2305.19118}.
+
+\bibitem[Medina(2026)]{Medina2026}
+Robert Medina.
+\newblock Adaptive consensus in llm ensembles via sequential evidence
+  accumulation: Automatic budget identification and calibrated commit signals.
+\newblock 2026.
+
+\bibitem[Miller and Bassler(2001)]{Miller2001}
+Melissa~B. Miller and B.~Bassler.
+\newblock Quorum sensing in bacteria.
+\newblock In \emph{Annual Review of Microbiology}, volume~55, pages 165--99,
+  2001.
+\newblock \doi{10.1146/ANNUREV.MICRO.55.1.165}.
+
+\bibitem[Pleiss et~al.(2017)Pleiss, Li, Lin, Kuemmerle, Cai, and
+  Weinberger]{TemperatureScaling2017}
+Geoffrey Pleiss, Danforth~T. Li, Christopher~X. Lin, Matthias Kuemmerle, Trevor
+  Cai, and Kilian~Q. Weinberger.
+\newblock Temperature scaling for calibrating neural networks.
+\newblock \url{https://github.com/gpleiss/temperature_scaling}, 2017.
+
+\bibitem[Wang et~al.(2025)Wang, Yan, Xing, Liu, He, Fu, Hu, and Heng]{Wang2025}
+Yihan Wang, Qiao Yan, Zhenghao Xing, Lihao Liu, Junjun He, Chi-Wing Fu, Xiaowei
+  Hu, and Pheng-Ann Heng.
+\newblock Silence is not consensus: Disrupting agreement bias in multi-agent
+  llms via catfish agent for clinical decision making.
+\newblock \emph{ArXiv}, abs/2505.21503, 2025.
+\newblock \doi{10.48550/arXiv.2505.21503}.
+
+\bibitem[Williams and Cui(2020)]{Williams2020}
+Jessica~W. Williams and Xuefeng Cui.
+\newblock Programming across scales: mathematical models of quorum sensing in
+  bacteria.
+\newblock \emph{Annual Review of Biophysics}, 49:\penalty0 381--399, 2020.
+\newblock \doi{10.1146/annurev-biophys-121219-081630}.
+
+\bibitem[Wu et~al.(2026)Wu, Li, Feng, Li, Wang, and Wang]{Wu2026}
+S.~Wu, Xue Li, Yan Feng, Yufang Li, Zhijun Wang, and Ran Wang.
+\newblock Council mode: A heterogeneous multi-agent consensus framework for
+  reducing llm hallucination and bias.
+\newblock 2026.
+
+\bibitem[Yang et~al.(2024)Yang, Tsai, and Yamada]{Yang2024}
+Daniel Yang, Yao-Hung Tsai, and Makoto Yamada.
+\newblock On verbalized confidence scores for llms.
+\newblock \emph{ArXiv}, abs/2412.14737, 2024.
+\newblock \doi{10.48550/arXiv.2412.14737}.
+
+\bibitem[Zhang et~al.(2023)Zhang, Du, Shan, Zhou, Du, Tenenbaum, Shu, and
+  Gan]{Zhang2023}
+Hongxin Zhang, Weihua Du, Jiaming Shan, Qinhong Zhou, Yilun Du, J.~Tenenbaum,
+  Tianmin Shu, and Chuang Gan.
+\newblock Building cooperative embodied agents modularly with large language
+  models.
+\newblock In \emph{International Conference on Learning Representations},
+  volume abs/2307.02485, 2023.
+\newblock \doi{10.48550/arXiv.2307.02485}.
+
+\bibitem[Zhou et~al.(2025)Zhou, Jin, Shi, and Li]{Zhou2025}
+Ziang Zhou, Tianyuan Jin, Jieming Shi, and Qing Li.
+\newblock Steerconf: Steering llms for confidence elicitation.
+\newblock 2025.
+
+\bibitem[Ákos Prucs et~al.(2025)Ákos Prucs, Csutora, Antal, and
+  Marosi]{Prucs2025}
+Ákos Prucs, M'arton Csutora, Mátyás Antal, and Márk Marosi.
+\newblock Compute-accuracy pareto frontiers for open-source reasoning large
+  language models.
+\newblock \emph{ArXiv}, abs/2512.24776, 2025.
+\newblock \doi{10.48550/arXiv.2512.24776}.
+
+\end{thebibliography}

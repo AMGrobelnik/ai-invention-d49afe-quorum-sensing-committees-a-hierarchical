@@ -1,0 +1,14 @@
+{
+  "title": "Quorum-Sensing Committees: LLM Consensus Protocol with Confidence-Based Dissent",
+  "summary": "Successfully generated a publication-ready LaTeX paper from the provided paper_text. The paper is 12 pages in PDF format (letter size) and includes all 3 required figures (fig1_v0.jpg, fig2_v0.jpg, fig3_v0.jpg) properly placed according to their aspect ratios (21:9 uses figure* environment). The bibliography (references.bib) contains 17 entries - 12 fetched from Semantic Scholar via aii_semscholar_bib__fetch and 5 manually added for entries without DOIs/ArXiv IDs. The paper compiles successfully to PDF with no unresolved citations. Visual review of all 12 pages confirmed proper layout: figures are correctly placed, text is readable, no overlapping elements or cut-off content. The paper discusses a hierarchical multi-agent LLM consensus protocol inspired by bacterial quorum sensing, with a critical bug discovery that invalidated initial results - this negative result is honestly presented as a contribution to prevent similar failures in future research.",
+  "out_expected_files": {
+    "paper_tex_path": "paper.tex",
+    "paper_pdf_path": "paper.pdf",
+    "references_bib_path": "references.bib",
+    "figure_paths": [
+      "figures/fig1_v0.jpg",
+      "figures/fig2_v0.jpg",
+      "figures/fig3_v0.jpg"
+    ]
+  }
+}
