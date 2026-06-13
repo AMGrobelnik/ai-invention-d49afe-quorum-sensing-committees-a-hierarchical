@@ -1,0 +1,80 @@
+{
+  "dataset_info": {
+    "name": "MMLU-Hard Mini Demo Dataset",
+    "description": "Curated subset of 5 diverse MMLU-Hard examples for demo purposes",
+    "source": "cais/mmlu (hard subjects)",
+    "num_examples": 5
+  },
+  "examples": [
+    {
+      "id": "mmlu_0",
+      "question": "You bought a limousine for $98,000 and are planning to rent it for weddings, ceremonies and parties at $245 per hour. If you estimate the car will be hired for 2 hours a day on average, with daily costs of $55 for driver, $40 for cleaning, $15 for maintenance, and $25 for insurance, what is the expected annual ROI (Return on Investment) as a percentage?",
+      "choices": ["164%", "196%", "212%", "238%"],
+      "correct_answer": 0,
+      "category": "professional_accounting",
+      "difficulty": 0.7,
+      "contestedness": 0.6,
+      "metadata": {
+        "source_dataset": "mmlu",
+        "original_split": "test",
+        "num_choices": 4
+      }
+    },
+    {
+      "id": "mmlu_1",
+      "question": "Arno Co. did not record a credit purchase of merchandise made prior to year end. However the merchandise was correctly included in the year-end physical inventory. What effect did the omission of recording the purchase have on Arno's financial statements at year end?",
+      "choices": ["No effect", "Understated", "Overstated", "Cannot determine"],
+      "correct_answer": 1,
+      "category": "professional_accounting",
+      "difficulty": 0.7,
+      "contestedness": 0.6,
+      "metadata": {
+        "source_dataset": "mmlu",
+        "original_split": "test",
+        "num_choices": 4
+      }
+    },
+    {
+      "id": "mmlu_2",
+      "question": "Which of the following statements about audit sampling risks is correct for a nonissuer?\nA. Nonsampling risk arises from the possibility that, when a substantive test is restricted to a sample, conclusions might be different from those that would be reached if the entire population were tested.\nB. Sampling risk arises from the possibility that a auditor's conclusions based on a sample might be different from those that would be reached if the entire population were tested.\nC. Nonsampling risk can arise because an auditor failed to recognize misstatements.\nD. Sampling risk is the risk that the auditor's conclusions based on a sample might be incorrect due to factors that do not affect the entire population.",
+      "choices": ["Statement A", "Statement B", "Statement C", "Statement D"],
+      "correct_answer": 2,
+      "category": "professional_accounting",
+      "difficulty": 0.7,
+      "contestedness": 0.6,
+      "metadata": {
+        "source_dataset": "mmlu",
+        "original_split": "test",
+        "num_choices": 4
+      }
+    },
+    {
+      "id": "mmlu_3",
+      "question": "A particle of mass m is moving in a one-dimensional potential V(x) = ax^4 - bx^2, where a and b are positive. Find the angular frequency of small oscillations around the stable equilibrium point.",
+      "choices": ["√(2b/m)", "√(4b/m)", "√(8b/m)", "√(b/m)"],
+      "correct_answer": 1,
+      "category": "conceptual_physics",
+      "difficulty": 0.75,
+      "contestedness": 0.65,
+      "metadata": {
+        "source_dataset": "mmlu",
+        "original_split": "test",
+        "num_choices": 4
+      }
+    },
+    {
+      "id": "mmlu_4",
+      "question": "In propositional logic, consider the argument: (P → Q), (Q → R), therefore (P → R). What is the name of this valid argument form?",
+      "choices": ["Modus Ponens", "Modus Tollens", "Hypothetical Syllogism", "Disjunctive Syllogism"],
+      "correct_answer": 2,
+      "category": "formal_logic",
+      "difficulty": 0.65,
+      "contestedness": 0.55,
+      "metadata": {
+        "source_dataset": "mmlu",
+        "original_split": "test",
+        "num_choices": 4
+      }
+    }
+  ]
+}

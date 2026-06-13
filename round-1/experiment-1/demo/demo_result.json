@@ -1,0 +1,16 @@
+{
+  "kind": "code_demo",
+  "id": "art_E1F8viCPl569",
+  "name": "gen_art_experiment_1",
+  "type": "code",
+  "iteration": 1,
+  "title": "Quorum-Sensing Committees: Hierarchical LLM Consensus Prototype",
+  "summary": "Implemented a complete Quorum-Sensing Consensus Protocol prototype with the following components:\n\n1. **ConsensusField class** with dual thresholds (\u0398_c=2.0 consensus threshold, \u0398_v=1.5 veto threshold) that accumulates agent confidence signals like bacterial autoinducers in quorum sensing.\n\n2. **Layer-1/Layer-2 agent architecture**: Layer-1 uses 5\u00d7 meta-llama/llama-3.1-8b-instruct with different temperature settings (0.0, 0.3, 0.5, 0.7, 1.0) for diversity; Layer-2 uses 2\u00d7 openai/gpt-4o-mini for escalation when consensus fails.\n\n3. **LLM interface via OpenRouter**: Implemented call_llm() function that calls OpenRouter API using aii-openrouter-llms skill. Improved prompt engineering forces models to return single-letter answers (A/B/C/D) with confidence scores.\n\n4. **Baseline comparison**: Implemented run_flat_majority_voting() as baseline - simple majority voting without confidence weighting or veto mechanism.\n\n5. **Experiment results** (20 MMLU-Hard examples):\n   - QS accuracy: 15%, Baseline accuracy: 20%\n   - Veto rate: 0%, Escalation rate: 65%\n   - Total cost: $0.000005 (well under $10 budget)\n   - Note: QS performed slightly worse than baseline on this small sample, likely due to threshold tuning needs\n\n6. **Output validation**: method_out.json validated against exp_gen_sol_out.json schema. Generated full/mini/preview versions.\n\n7. **Code quality**: Unit tests for ConsensusField logic, integration tests with 3-5 questions, full experiment runs with budget tracking.",
+  "original_path": "/home/adrian/projects/ai-inventor/aii_data/users/admin/runs/run_MuCfD2GQxc0g/3_invention_loop/iter_1/gen_art/gen_art_experiment_1",
+  "demo_path": "/home/adrian/projects/ai-inventor/aii_data/users/admin/runs/run_MuCfD2GQxc0g/4_gen_paper_repo/_3_gen_art_demo/iter_1/art_E1F8viCPl569",
+  "out_expected_files": {
+    "notebook": "code_demo.ipynb",
+    "mini_data_file": "mini_demo_data.json"
+  },
+  "notebook_path": "/home/adrian/projects/ai-inventor/aii_data/users/admin/runs/run_MuCfD2GQxc0g/4_gen_paper_repo/_3_gen_art_demo/iter_1/art_E1F8viCPl569/method_code_demo.ipynb"
+}

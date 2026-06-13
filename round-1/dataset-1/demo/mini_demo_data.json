@@ -1,0 +1,60 @@
+{
+  "datasets": [
+    {
+      "dataset": "mmlu",
+      "examples": [
+        {
+          "input": "You bought a limousine for $98,000 and are planning to rent it for weddings, ceremonies and parties at $245 per hour. If you estimate the car will be hired for 2 hours a day on average, with daily costs at about $50, what is the estimated yearly yield on your investment if you work all year round, i.e. every day of the year, including any festivities and weekends?",
+          "output": "0",
+          "metadata_dataset": "mmlu",
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7,
+          "metadata_contestedness": 0.6,
+          "metadata_num_choices": 4,
+          "metadata_choices": [
+            "164%",
+            "1.64%",
+            "0.45%",
+            "183%"
+          ],
+          "metadata_original_split": "test",
+          "metadata_example_index": 0
+        },
+        {
+          "input": "Arno Co. did not record a credit purchase of merchandise made prior to year end. However the merchandise was correctly included in the year-end physical inventory. What effect did the omission of reporting the purchase of merchandise have on Arno's balance sheet at year end? Assets Liabilities",
+          "output": "1",
+          "metadata_dataset": "mmlu",
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7,
+          "metadata_contestedness": 0.6,
+          "metadata_num_choices": 4,
+          "metadata_choices": [
+            "No effect No effect",
+            "No effect Understated",
+            "Understated No effect",
+            "Understated Understated"
+          ],
+          "metadata_original_split": "test",
+          "metadata_example_index": 1
+        },
+        {
+          "input": "Which of the following statements about audit sampling risks is correct for a nonissuer?",
+          "output": "1",
+          "metadata_dataset": "mmlu",
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7,
+          "metadata_contestedness": 0.6,
+          "metadata_num_choices": 4,
+          "metadata_choices": [
+            "Nonsampling risk arises from the possibility that, when a substantive test is restricted to a sample, conclusions might be different than if the auditor had tested each item in the population.",
+            "Nonsampling risk can arise because an auditor failed to recognize misstatements.",
+            "Sampling risk is derived from the uncertainty in applying audit procedures to specific risks.",
+            "Sampling risk includes the possibility of selecting audit procedures that are not appropriate to achieve the specific objective."
+          ],
+          "metadata_original_split": "test",
+          "metadata_example_index": 2
+        }
+      ]
+    }
+  ]
+}

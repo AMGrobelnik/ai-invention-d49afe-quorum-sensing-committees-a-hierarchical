@@ -1,0 +1,16 @@
+{
+  "kind": "code_demo",
+  "id": "art_BeQad4S7HvJR",
+  "name": "gen_art_dataset_1",
+  "type": "code",
+  "iteration": 1,
+  "title": "Benchmark Datasets for Quorum-Sensing Consensus Evaluation: MMLU-Hard, GPQA, TruthfulQA",
+  "summary": "Successfully acquired and processed three benchmark datasets for evaluating hierarchical LLM consensus protocols with confidence-calibrated veto mechanisms. The datasets include: (1) MMLU-Hard (2197 examples from 10 difficult subjects like professional_accounting and conceptual_physics), (2) GPQA (448 graduate-level questions from biology, physics, and chemistry), and (3) TruthfulQA (817 questions testing truthfulness with plausible incorrect answers). All datasets were standardized to a unified JSON schema with fields for id, question, choices, correct_answer, category, difficulty (0-1), contestedness (0-1), and metadata. The contestedness metric was computed as 1 - baseline_accuracy for MMLU-Hard, 1 - expert_accuracy for GPQA, and ratio of plausible incorrect answers for TruthfulQA. Output files include full_data_out.json (3MB, 3462 examples), mini_data_out.json (30KB, 30 examples), and preview_data_out.json (9KB, 9 examples). All files are under the 300MB size limit. The datasets are ready for evaluating quorum-sensing consensus protocols that use confidence calibration and veto mechanisms.",
+  "original_path": "/home/adrian/projects/ai-inventor/aii_data/users/admin/runs/run_MuCfD2GQxc0g/3_invention_loop/iter_1/gen_art/gen_art_dataset_1",
+  "demo_path": "/home/adrian/projects/ai-inventor/aii_data/users/admin/runs/run_MuCfD2GQxc0g/4_gen_paper_repo/_3_gen_art_demo/iter_1/art_BeQad4S7HvJR",
+  "out_expected_files": {
+    "notebook": "code_demo.ipynb",
+    "mini_data_file": "mini_demo_data.json"
+  },
+  "notebook_path": "/home/adrian/projects/ai-inventor/aii_data/users/admin/runs/run_MuCfD2GQxc0g/4_gen_paper_repo/_3_gen_art_demo/iter_1/art_BeQad4S7HvJR/data_code_demo.ipynb"
+}
