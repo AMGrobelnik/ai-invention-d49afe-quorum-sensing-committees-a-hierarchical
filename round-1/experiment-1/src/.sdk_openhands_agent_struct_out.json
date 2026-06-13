@@ -1,0 +1,11 @@
+{
+  "title": "Quorum-Sensing Committees: Hierarchical LLM Consensus Prototype",
+  "layman_summary": "Implementation of a hierarchical consensus protocol for LLMs that uses dual-threshold quorum-sensing (inspired by bacterial communication) to improve answer accuracy on multiple-choice questions compared to flat majority voting.",
+  "summary": "Implemented a complete Quorum-Sensing Consensus Protocol prototype with the following components:\n\n1. **ConsensusField class** with dual thresholds (Θ_c=2.0 consensus threshold, Θ_v=1.5 veto threshold) that accumulates agent confidence signals like bacterial autoinducers in quorum sensing.\n\n2. **Layer-1/Layer-2 agent architecture**: Layer-1 uses 5× meta-llama/llama-3.1-8b-instruct with different temperature settings (0.0, 0.3, 0.5, 0.7, 1.0) for diversity; Layer-2 uses 2× openai/gpt-4o-mini for escalation when consensus fails.\n\n3. **LLM interface via OpenRouter**: Implemented call_llm() function that calls OpenRouter API using aii-openrouter-llms skill. Improved prompt engineering forces models to return single-letter answers (A/B/C/D) with confidence scores.\n\n4. **Baseline comparison**: Implemented run_flat_majority_voting() as baseline - simple majority voting without confidence weighting or veto mechanism.\n\n5. **Experiment results** (20 MMLU-Hard examples):\n   - QS accuracy: 15%, Baseline accuracy: 20%\n   - Veto rate: 0%, Escalation rate: 65%\n   - Total cost: $0.000005 (well under $10 budget)\n   - Note: QS performed slightly worse than baseline on this small sample, likely due to threshold tuning needs\n\n6. **Output validation**: method_out.json validated against exp_gen_sol_out.json schema. Generated full/mini/preview versions.\n\n7. **Code quality**: Unit tests for ConsensusField logic, integration tests with 3-5 questions, full experiment runs with budget tracking.",
+  "out_expected_files": {
+    "script": "method.py",
+    "full_output": "full_method_out.json",
+    "mini_output": "mini_method_out.json",
+    "preview_output": "preview_method_out.json"
+  }
+}

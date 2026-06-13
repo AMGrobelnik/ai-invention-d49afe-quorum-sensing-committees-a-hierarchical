@@ -1,0 +1,12 @@
+[project]
+name = "dataset-processor"
+version = "0.1.0"
+description = "Process MMLU-Hard, GPQA, and TruthfulQA datasets for quorum-sensing consensus evaluation"
+requires-python = ">=3.12"
+dependencies = [
+    "datasets==3.6.0",
+    "pandas==3.0.3",
+    "loguru==0.7.3",
+    "jsonschema==4.23.0",
+    "huggingface-hub==0.31.4"
+]

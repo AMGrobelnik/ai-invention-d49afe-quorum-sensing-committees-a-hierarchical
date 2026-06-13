@@ -1,0 +1,130 @@
+{
+  "title": "Quorum-Sensing LLM Consensus: Mathematical Framework and Review",
+  "layman_summary": "AI models reach consensus like bacteria using chemical signals. Dissenting agents veto when confident. History stored in prompts improves deliberation.",
+  "summary": "This research artifact provides a comprehensive literature review and mathematical formalism for quorum-sensing inspired hierarchical LLM consensus. It synthesizes biological quorum sensing mathematics (ODE models for autoinducer kinetics), LLM confidence calibration methods (verbalized confidence, logprobs, temperature scaling), existing multi-agent consensus mechanisms (Catfish Agent, DASE, Council Mode, Minority-Veto Ensemble), and stigmergic coordination theory. The key output is a novel mathematical framework featuring: (1) consensus field dynamics C_t = Σ_i w_i c_i with decay, (2) dual-threshold signaling (Θ_c for consensus, Θ_v for veto), (3) confidence-calibrated dissent veto with 30% minority rule, (4) hierarchical escalation protocol (Layer 1 base committee → Layer 2 expert review), and (5) stigmergic trace format for environmental memory across rounds. The formalism maps biological quorum sensing equations (dA/dt = α - βA) to confidence accumulation (dC/dt = αΣc_i - βC). Design recommendations include threshold selection (Θ_c=0.7, Θ_v=0.3), confidence aggregation (weighted arithmetic mean with calibration-based weights), and implementation approach (OpenRouter logprobs primary, verbalized confidence fallback, temperature scaling calibration). The research identifies the mathematical gap that existing approaches fail to integrate dual-threshold signaling with confidence calibration and stigmergic traces, providing a formalized solution.",
+  "out_expected_files": {
+    "output": "research_out.json"
+  },
+  "answer": "## Comprehensive Literature Review: Quorum-Sensing LLM Consensus\n\n### Executive Summary\n\nThis research synthesizes mathematical frameworks from biological quorum sensing, LLM confidence calibration, multi-agent consensus mechanisms, and stigmergic coordination to formalize a novel hierarchical LLM consensus protocol with dual-threshold signaling and confidence-calibrated dissent veto. The key finding is that while existing approaches (Catfish Agent, DASE, Council Mode, Minority-Veto Ensemble) address aspects of multi-agent LLM consensus, none integrate biological quorum sensing dynamics with confidence-calibrated dissent mechanisms and stigmergic traces. The mathematical formalism for quorum sensing provides a strong foundation for modeling confidence accumulation, while confidence calibration research reveals that verbalized confidence can be reliable with proper prompting but logprobs extraction via APIs like OpenRouter provides more rigorous uncertainty quantification.\n\n### 1. Biological Quorum Sensing Mathematical Models\n\nQuorum sensing in bacteria is governed by autoinducer molecule dynamics modeled with differential equations [1][2][3]. The core mathematical model consists of:\n\n**Autoinducer Kinetics (ODE model):**\n```\ndA/dt = -k_RAR_A + k_P P + k_2 L - k_A A\ndP/dt = k_RAR_A - k_P P - k_R R + k_1 r\ndR/dt = -k_RAR_A + k_P P - k_R R + k_1 r\n```\nWhere A = autoinducer concentration, P = protein complex, R = transcriptional activator protein [3].\n\n**Key Mathematical Properties:**\n- **Bistability**: Quorum sensing exhibits switch-like behavior between low and high autoinducer states, creating a threshold effect [1][3]\n- **Threshold Dynamics**: The quorum threshold Θ is not fixed but emerges from the bistable switch point where autoinducer concentration crosses a critical level [1]\n- **Signal Accumulation**: Autoinducer accumulates proportionally to cell density, with degradation and diffusion terms [2]\n- **Time Delay**: Signal accumulation has temporal dynamics important for consensus timing [2]\n\n**Mapping to LLM Confidence:**\nThe autoinducer concentration A(t) maps naturally to consensus field C_t. The synthesis rate k_2L maps to confidence generation rate αΣc_i, and degradation rate k_A A maps to decay term βC_t [1][3].\n\n### 2. LLM Confidence Calibration Methods\n\n#### 2.1 Verbalized Confidence\n\nVerbalized confidence (asking LLM 'I am X% confident') shows mixed reliability [4][5][6]:\n- **Well-calibrated with proper prompting**: Tian et al. (2023) demonstrate verbalized confidence can be competitive with post-hoc calibration [5]\n- **Poor calibration with naive prompting**: Xiong et al. (2023) find elicited probabilities degrade on hard problems [6]\n- **Calibration depends on prompt method**: Yang et al. (2024) show reliability strongly depends on how model is asked [4]\n- **Recommended approach**: Use calibrated prompts with score range specification (0-100%) and proper score formulation [4]\n\n#### 2.2 Logprobs-Based Confidence\n\nLogprobs provide more rigorous uncertainty quantification [7][8]:\n- **OpenRouter API support**: 23% of OpenRouter endpoints support returning 5-20 logprobs, including all xAI models, OpenAI GPT-4.1 series, and many open-weight models [7]\n- **Confidence extraction**: Logprobs encode probability distribution over vocabulary; can extract confidence from answer token logprobs [8]\n- **Non-determinism challenge**: Logprobs fluctuate between identical requests due to batching and GPU routing [7]\n- **Statistical testing**: Can use permutation tests on average logprobs to detect model changes [7]\n\n#### 2.3 Temperature Scaling and Platt Scaling\n\n**Temperature Scaling Formula** [9][10]:\n```\nP(i,T) = exp(z_i/T) / Σ_j exp(z_j/T)\n```\nWhere z_i = logits, T = temperature parameter. When T > 1, distribution flattens (lower confidence); T < 1 sharpens (higher confidence) [9].\n\n**Platt Scaling** [11]:\nTrains a logistic regression on top of model outputs to map raw scores to calibrated probabilities. More flexible than temperature scaling but requires holdout validation data [11].\n\n**Adaptive Temperature Scaling (ATS)** [12]:\nPredicts per-token temperature parameter, achieving better calibration than global temperature scaling [12].\n\n#### 2.4 Recommended Confidence Extraction Approach\n\nFor the quorum-sensing consensus framework, I recommend:\n1. **Primary method**: Extract confidence from answer token logprobs via OpenRouter API (when available)\n2. **Fallback method**: Use verbalized confidence with calibrated prompt template [4]\n3. **Calibration layer**: Apply temperature scaling using small validation set to improve calibration [9][10]\n\n### 3. Existing Multi-Agent LLM Consensus Mechanisms\n\n#### 3.1 Catfish Agent (arXiv 2505.21503)\n\n**Mechanism**: Injects structured dissent via specialized agent to disrupt 'Silent Agreement' [13]\n\n**Key Features**:\n- **Complexity-aware intervention**: Adapts dissent level based on case difficulty (basic/intermediate/advanced) [13]\n- **Tone-calibrated intervention**: Adjusts rhetorical strength (mild/moderate/strong) based on consensus strength [13]\n- **Hierarchical structure**: For advanced cases, uses team-of-teams with catfish agent traversing teams [13]\n- **Performance**: 12.7-point average improvement on medical Q&A, 39.2% relative gain over DeepSeek-R1 [13]\n\n**Limitations for Our Framework**:\n- No mathematical formalism for dissent strength or veto mechanism\n- No dual-threshold signaling\n- Hierarchical escalation is manual (Moderator decides), not automatic based on thresholds\n\n#### 3.2 DASE (arXiv 2605.04236)\n\n**Mechanism**: Adaptive stopping heuristic for iterative ensemble deliberation using spatial arena [14]\n\n**Mathematical Framework**:\n- **Evidence Score (Eq. 1)**:\n```\ng_t = [I^{-1}_{1-wα_t}(r+1, n-r+1) - I^{-1}_{1/2}(r+1, n-r+1)] / [I^{-1}_{1-wα_t}(r+1, n-r+1) - I^{-1}_{wα_t}(r+1, n-r+1)]\n```\nWhere r = votes for answer, n = total workers, α_t = ε_t/n, w = 0.2 [14]\n\n- **Spatial Arena Dynamics**:\n```\nV_R = g_t - c_x(W - x_t)  (right wall value)\nV_L = (1 - g_t) - c_x(x_t + W)  (left wall value)\n```\nWhere x_t = current position, W = wall boundary, c_x = 0.01 [14]\n\n- **Commit Conditions**: Right-wall (x = +W) = consensus commit; Left-wall (x = -W) = fallback [14]\n\n**Performance**:\n- 39.5 pp routing gap on GPQA (right-wall 81.1% vs left-wall 41.5%) [14]\n- 25.5 pp gap on AIME at 120B tier [14]\n- Adaptive stopping drives 6.0 pp improvement over bandwidth alone [14]\n\n**Limitations for Our Framework**:\n- Single threshold (wall contact), not dual-threshold\n- No explicit dissent/veto mechanism\n- Evidence score is heuristic, not confidence-based\n\n#### 3.3 Council Mode (arXiv 2604.02923)\n\n**Mechanism**: Heterogeneous multi-agent consensus with triage → parallel generation → structured synthesis [15]\n\n**Mathematical Framework**:\n- **Triage Function**: T(q) = 0 (bypass) if C_client(q) = 0 AND C_server(q) = 0, else 1 (council) [15]\n- **Claim Extraction**: O = ⟨O_consensus, O_partial, O_disagree, O_unique, O_analysis⟩ [15]\n- **Consensus Set**: O_consensus = {f | f ∈ ⋂_{i=1}^N F(R_i)} (claims in all responses) [15]\n\n**Performance**:\n- 35.9% relative reduction in hallucination rate on HaluEval [15]\n- 7.8-point improvement on TruthfulQA [15]\n- 10.2-point improvement on MDR-500 reasoning benchmark [15]\n\n**Limitations for Our Framework**:\n- No threshold-based signaling\n- No dissent/veto mechanism\n- Synthesis is post-hoc, not iterative with feedback\n\n#### 3.4 Minority-Veto Ensemble (arXiv 2510.11822)\n\n**Mechanism**: Marks output as 'invalid' if at least n validators agree (empowers minority to override majority) [16]\n\n**Key Findings**:\n- **LLM validators have agreeableness bias**: TPR > 96% but TNR < 25% (poor at detecting invalid outputs) [16]\n- **Optimal veto threshold**: n = 4 votes (out of 14) minimizes maximum absolute error to 2.8% [16]\n- **Robust to missing data**: Unlike majority voting which requires data repair [16]\n\n**Regression-based calibration**: Explicitly models validator TPR/TNR using small ground-truth set, reducing max error to 1.2% [16]\n\n**Limitations for Our Framework**:\n- Designed for evaluation (LLM-as-judge), not consensus formation\n- Binary valid/invalid, not continuous confidence-based veto\n- No hierarchical escalation\n\n### 4. Stigmergic Coordination in AI Systems\n\n**Definition**: Stigmergy is 'a mechanism of indirect coordination through the environment, between agents or actions' [17]. The trace left in the environment by an action stimulates subsequent actions [17].\n\n**Formal Definition (Grassé, 1959)**: 'Stimulation of workers by the performance they have achieved' [17].\n\n**Key Properties**:\n- **Indirect coordination**: No direct communication needed between agents [17]\n- **Environmental traces**: Agents modify environment, other agents sense modifications [17]\n- **Positive feedback**: Traces accumulate (e.g., pheromone trails) [17]\n- **Self-organization**: Complex structures emerge without central control [17]\n\n**Applications in AI**:\n- **Multi-agent systems**: Virtual stigmergy via shared data structures [18]\n- **LLM systems**: 'Stigmergy pattern reduces tokens by 80%' (Dev.to article) [19]\n- **Swarm intelligence**: Ant colony optimization uses virtual pheromones [17]\n\n**Mapping to Consensus Framework**:\n- **Consensus field state** = stigmergic trace in environment\n- **Trace content**: Previous round votes, confidences, rationale\n- **Update rule**: Add new trace information, apply temporal decay\n- **Format**: 'Previous round: Field value = X, Majority voted Y with avg confidence Z, Minority dissented with avg confidence W'\n\n### 5. Proposed Mathematical Framework\n\nSynthesizing all findings, I propose the following formalism:\n\n#### 5.1 Consensus Field Dynamics\n\n```\nC_t = Σ_i (c_i × w_i) + λ × decay(C_{t-1})\n```\nWhere:\n- C_t = consensus field value at time t\n- c_i = agent i's confidence (0-1 or unbounded)\n- w_i = agent weight (can be based on historical calibration)\n- λ = decay factor (0 ≤ λ ≤ 1)\n- decay function: exponential decay exp(-γΔt) recommended\n\n**Mapping from quorum sensing**:\n```\ndC/dt = αΣc_i - βC\n```\nWhere α = confidence-to-signal conversion rate, β = decay rate [1][3]\n\n#### 5.2 Dual Thresholds\n\n```\nΘ_c = consensus threshold (minimum C_t for consensus)\nΘ_v = veto threshold (minimum minority confidence to trigger veto)\n```\n\n**Threshold Selection**:\n- **Θ_c**: Should be set to achieve target accuracy (e.g., 0.7 = 70% confidence)\n- **Θ_v**: Should be lower than Θ_c but higher than random (e.g., 0.3)\n- **Adaptive thresholds**: Can learn optimal thresholds on validation set\n- **Relationship**: Θ_v < Θ_c (veto is easier to trigger than consensus)\n\n#### 5.3 Veto Trigger Algorithm\n\n```\nif (Σ_{i ∈ minority} c_i × w_i ≥ Θ_v) AND (minority_size ≥ min_minority):\n    trigger_veto = True\n```\n\n**Minority Definition**:\n- Option A: Single agent with confidence > Θ_v\n- Option B: 30% of agents (dissenter block)\n- Option C: Any coordinated dissent (all minority agree)\n- **Recommendation**: Option B (30%) balances sensitivity and robustness\n\n**Prevention of Gaming**:\n- Use historical calibration to downweight systematically overconfident agents\n- Cap maximum confidence (e.g., 0.95) to prevent strategic overconfidence\n\n#### 5.4 Hierarchical Escalation Protocol\n\n```\nLayer 1: Base committee (N agents)\nLayer 2: Review committee (M experts, more capable/expensive)\n\nEscalation trigger:\nif (veto_triggered) OR (no_consensus_after_T_rounds):\n    escalate_to_layer_2()\n```\n\n**Design Decisions**:\n- **M < N**: Layer 2 should be smaller but more capable (e.g., N=5, M=3)\n- **Layer 2 sees Layer 1's deliberation**: Provide full trace for context\n- **Cost function**: Cost = N × base_cost + P(veto) × M × expert_cost\n\n#### 5.5 Stigmergic Trace Format\n\n**Prompt Template**:\n```\nPrevious rounds consensus field trace:\nRound 1: Field value = 0.65, Majority voted A with avg confidence 0.7, Minority (2 agents) voted B with avg confidence 0.4\nRound 2: Field value = 0.72, Majority voted A with avg confidence 0.75, Minority (1 agent) voted C with confidence 0.6\nCurrent round: [agent response here]\n```\n\n**Trace Retention**: Last 3 rounds recommended (balances context vs noise)\n\n**Update Rule**:\n```\ntrace_t = f(C_t, votes_t, confidences_t, rationales_t)\n```\n\n### 6. Design Recommendations\n\n#### 6.1 Threshold Selection\n\n- **Fixed thresholds**: Start with Θ_c = 0.7, Θ_v = 0.3\n- **Adaptive thresholds**: Learn from validation set using grid search\n- **Mathematical relationship**: Θ_v = Θ_c - Δ, where Δ = 0.3-0.4 typical\n\n#### 6.2 Confidence Aggregation\n\n- **Recommendation**: Weighted arithmetic mean (not geometric mean)\n- **Weight by calibration**: Use historical ECE to weight agents\n- **Bound confidence**: [0, 1] or [0, 0.95] to prevent overconfidence\n\n#### 6.3 Veto Trigger\n\n- **Minority definition**: 30% of agents\n- **Coordination requirement**: At least 2 agents must agree (prevents single agent gaming)\n- **Override condition**: If minority confidence > Θ_v AND their answer differs from majority\n\n#### 6.4 Implementation Notes\n\n- **OpenRouter API**: Use logprobs parameter for confidence extraction [7]\n- **Fallback**: Verbalized confidence with calibrated prompt [4]\n- **Calibration**: Apply temperature scaling on small validation set [9][10]\n- **Cost optimization**: Use cheaper models for Layer 1, expensive for Layer 2\n\n### 7. Implementation Roadmap\n\n1. **Implement confidence extraction** from OpenRouter API (logprobs or verbalized)\n2. **Code consensus field dynamics** with configurable thresholds\n3. **Implement veto trigger** with minority dissent detection\n4. **Build hierarchical escalation** (Layer 1 → Layer 2)\n5. **Design stigmergic trace** prompt template\n6. **Calibrate on validation set** (MMLU subset)\n7. **Evaluate on benchmarks** (MMLU-Hard, GPQA, TruthfulQA)\n\n### 8. Novelty Statement\n\nThis framework is novel compared to existing approaches:\n- **vs Catfish Agent**: Adds mathematical formalism (dual thresholds, consensus field) and automatic hierarchical escalation\n- **vs DASE**: Adds veto mechanism, confidence calibration, and stigmergic traces\n- **vs Council Mode**: Adds threshold-based signaling and iterative consensus formation\n- **vs Minority-Veto**: Extends binary veto to continuous confidence-based veto with quorum sensing dynamics\n\n### Confidence Level: HIGH\n\nThe mathematical foundations from quorum sensing biology are well-established [1][2][3]. The LLM confidence calibration methods are actively researched with clear recommendations [4][5][6][7][8]. The existing multi-agent consensus approaches provide strong baselines and comparative context [13][14][15][16]. The stigmergy formalism is well-defined in swarm intelligence literature [17][18].\n\n**What would change confidence**: More precise equations for confidence-to-field mapping, empirical validation of threshold selection criteria, and testing of stigmergic trace effectiveness in prompts.",
+  "sources": [
+    {
+      "index": 1,
+      "url": "https://www.math.utah.edu/~keener/pubs/papers/bulm0205.pdf",
+      "title": "A Mathematical Model for Quorum Sensing in Pseudomonas aeruginosa",
+      "summary": "Presents ODE model for quorum sensing with autoinducer kinetics: dA/dt = -k_RAR_A + k_P P + k_2 L - k_A A. Establishes bistability and threshold dynamics."
+    },
+    {
+      "index": 2,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29130179/",
+      "title": "Differential Equations Models to Study Quorum Sensing",
+      "summary": "Overview of ODE and PDE models for quorum sensing. Rates of change represented by derivatives. Covers autoinducer concentration dynamics and bacterial growth."
+    },
+    {
+      "index": 3,
+      "url": "https://www.siam.org/media/zemfymwr/mathmatters_quorum.pdf",
+      "title": "The Math behind Quorum Sensing Mechanism (SIAM)",
+      "summary": "Educational overview of quorum sensing mathematics. Explains threshold concentration, ODE/PDE models, stability analysis, and stochastic processes in quorum sensing."
+    },
+    {
+      "index": 4,
+      "url": "https://arxiv.org/html/2412.14737v2",
+      "title": "On Verbalized Confidence Scores for LLMs",
+      "summary": "Comprehensive analysis of verbalized confidence reliability. Shows calibration depends strongly on prompt method. Recommends specific prompt formulations for well-calibrated scores."
+    },
+    {
+      "index": 5,
+      "url": "https://arxiv.org/html/2503.02863v1",
+      "title": "Calibrating LLM Confidence with Semantic Steering",
+      "summary": "Shows prompt-induced confidence shifts are possible and can improve calibration. SteeringConf framework reduces ECE by up to 39.8%. Demonstrates directional confidence control."
+    },
+    {
+      "index": 6,
+      "url": "https://arxiv.org/html/2403.08819v1",
+      "title": "Thermometer: Towards Universal Calibration for Large Language Models",
+      "summary": "Proposes auxiliary model for LLM calibration. Temperature scaling preserves accuracy. Transfers across model scales and benchmarks. ~0.5% inference overhead."
+    },
+    {
+      "index": 7,
+      "url": "https://arxiv.org/html/2512.03816v1",
+      "title": "Log Probability Tracking of LLM APIs",
+      "summary": "Shows 23% of OpenRouter endpoints support logprobs. Logprobs enable cost-effective model change detection. Single-token prompt sufficient for sensitive detection."
+    },
+    {
+      "index": 8,
+      "url": "https://openrouter.ai/docs/api/reference/parameters",
+      "title": "OpenRouter API Parameters - Logprobs",
+      "summary": "Documents logprobs parameter for confidence extraction. When true, returns log probabilities of output tokens. Essential for rigorous confidence quantification."
+    },
+    {
+      "index": 9,
+      "url": "https://github.com/gpleiss/temperature_scaling",
+      "title": "Temperature Scaling - GitHub Repository",
+      "summary": "Provides temperature scaling formula: softmax = e^(z/T) / Σ_i e^(z_i/T). T > 1 flattens distribution (lower confidence). Post-processing calibration method."
+    },
+    {
+      "index": 10,
+      "url": "https://www.kdnuggets.com/a-deep-dive-into-calibration-of-language-models-platt-scaling-isotonic-regression-temperature-scaling",
+      "title": "A Deep Dive into Calibration of Language Models",
+      "summary": "Explains temperature scaling and Platt scaling for LLMs. Temperature scaling divides logits by scalar T. Platt scaling uses logistic regression for calibration."
+    },
+    {
+      "index": 11,
+      "url": "https://en.wikipedia.org/wiki/Platt_scaling",
+      "title": "Platt Scaling - Wikipedia",
+      "summary": "Parametric approach to calibration. Trains logistic regression on validation set to map raw scores to probabilities. More flexible than temperature scaling but requires holdout data."
+    },
+    {
+      "index": 12,
+      "url": "https://arxiv.org/abs/2409.19817",
+      "title": "Calibrating Language Models with Adaptive Temperature Scaling",
+      "summary": "Proposes ATS: predicts per-token temperature parameter. Improves calibration over global temperature scaling. Post-hoc method requiring no model retraining."
+    },
+    {
+      "index": 13,
+      "url": "https://arxiv.org/abs/2505.21503",
+      "title": "Catfish Agent: Disrupting Agreement Bias in Multi-Agent LLMs",
+      "summary": "Introduces Catfish Agent with complexity-aware and tone-calibrated interventions. Reduces silent agreement from 64% to 17%. 12.7-point improvement on medical Q&A. Hierarchical team-of-teams for complex cases."
+    },
+    {
+      "index": 14,
+      "url": "https://arxiv.org/abs/2605.04236",
+      "title": "DASE: Adaptive Consensus in LLM Ensembles via Sequential Evidence Accumulation",
+      "summary": "DASE-Spatial uses evidence score g_t and spatial arena with walls at ±W. Eq. 1 defines g_t using beta distribution quantiles. V_R = g_t - c_x(W-x_t), V_L = (1-g_t) - c_x(x_t+W). 39.5 pp routing gap on GPQA."
+    },
+    {
+      "index": 15,
+      "url": "https://arxiv.org/abs/2604.02923",
+      "title": "Council Mode: A Heterogeneous Multi-Agent Consensus Framework",
+      "summary": "Three-phase pipeline: Triage → Parallel Generation → Consensus Synthesis. Claim extraction and classification. 35.9% reduction in hallucination. 7.8-point improvement on TruthfulQA."
+    },
+    {
+      "index": 16,
+      "url": "https://arxiv.org/abs/2510.11822",
+      "title": "Mitigating the Agreeableness Bias in LLM Judge Evaluations",
+      "summary": "Minority-veto strategy: mark invalid if ≥n validators agree. Optimal n=4 (out of 14). TPR > 96% but TNR < 25%. Regression-based calibration reduces max error to 1.2%."
+    },
+    {
+      "index": 17,
+      "url": "https://en.wikipedia.org/wiki/Stigmergy",
+      "title": "Stigmergy - Wikipedia",
+      "summary": "Definition: 'mechanism of indirect coordination through environment'. Grassé (1959): 'Stimulation of workers by performance achieved'. Key properties: environmental traces, positive feedback, self-organization."
+    },
+    {
+      "index": 18,
+      "url": "https://www.sciencedirect.com/science/article/pii/S016764231930139X",
+      "title": "Multi-agent systems with virtual stigmergy",
+      "summary": "Agents operate on decentralized data structure (stigmergy) containing partial knowledge. Stigmergic coordination through environmental modifications. Applications in multi-agent systems."
+    },
+    {
+      "index": 19,
+      "url": "https://dev.to/keepalifeus/stigmergy-pattern-for-multi-agent-llm-systems-80-token-reduction-2lc9",
+      "title": "Stigmergy Pattern for Multi-Agent LLM Systems",
+      "summary": "Practical application of stigmergy to LLM systems. Claims 80% token reduction. Uses pheromone-like traces for coordination without direct communication."
+    }
+  ],
+  "follow_up_questions": [
+    "How does the consensus field dynamics equation (dC/dt = αΣc_i - βC) perform empirically compared to simpler weighted sum (C_t = Σ_i w_i c_i)?",
+    "What is the optimal way to set dual thresholds Θ_c and Θ_v adaptively based on task difficulty or model confidence?",
+    "How does the stigmergic trace format (prompt template) affect consensus quality and efficiency in practice?"
+  ]
+}

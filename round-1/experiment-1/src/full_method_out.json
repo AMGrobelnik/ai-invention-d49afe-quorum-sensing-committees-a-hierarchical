@@ -1,0 +1,368 @@
+{
+  "metadata": {
+    "method_name": "QuorumSensingConsensus",
+    "description": "Hierarchical LLM consensus with dual-threshold quorum-sensing",
+    "parameters": {
+      "consensus_threshold": 2.0,
+      "veto_threshold": 1.5,
+      "field_decay": 0.9
+    },
+    "summary_metrics": {
+      "num_examples": 20,
+      "qs_accuracy": 0.15,
+      "baseline_accuracy": 0.2,
+      "qs_correct": 3,
+      "baseline_correct": 4,
+      "veto_rate": 0.0,
+      "escalation_rate": 0.65,
+      "total_cost": 4.915499999999997e-06,
+      "budget_limit": 10.0
+    }
+  },
+  "datasets": [
+    {
+      "dataset": "mmlu-hard",
+      "examples": [
+        {
+          "input": "You bought a limousine for $98,000 and are planning to rent it for weddings, ceremonies and parties at $245 per hour. If you estimate the car will be hired for 2 hours a day on average, with daily costs at about $50, what is the estimated yearly yield on your investment if you work all year round, i.e. every day of the year, including any festivities and weekends?\nA. 164%\nB. 1.64%\nC. 0.45%\nD. 183%",
+          "output": "164%",
+          "predict_baseline": "B",
+          "predict_our_method": "C",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": true,
+          "metadata_qs_confidence_field": {
+            "C": 1.9,
+            "B": 0.0
+          },
+          "metadata_baseline_status": "no_consensus",
+          "metadata_correct_answer_idx": 0,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "Arno Co. did not record a credit purchase of merchandise made prior to year end. However the merchandise was correctly included in the year-end physical inventory. What effect did the omission of reporting the purchase of merchandise have on Arno's balance sheet at year end? Assets Liabilities\nA. No effect No effect\nB. No effect Understated\nC. Understated No effect\nD. Understated Understated",
+          "output": "No effect Understated",
+          "predict_baseline": "A",
+          "predict_our_method": "A",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": false,
+          "metadata_qs_confidence_field": {
+            "A": 2.9
+          },
+          "metadata_baseline_status": "consensus",
+          "metadata_correct_answer_idx": 1,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "Which of the following statements about audit sampling risks is correct for a nonissuer?\nA. Nonsampling risk arises from the possibility that, when a substantive test is restricted to a sample, conclusions might be different than if the auditor had tested each item in the population.\nB. Nonsampling risk can arise because an auditor failed to recognize misstatements.\nC. Sampling risk is derived from the uncertainty in applying audit procedures to specific risks.\nD. Sampling risk includes the possibility of selecting audit procedures that are not appropriate to achieve the specific objective.",
+          "output": "Nonsampling risk can arise because an auditor failed to recognize misstatements.",
+          "predict_baseline": "B",
+          "predict_our_method": "A",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": true,
+          "metadata_qs_confidence_field": {
+            "and my confidence level in the format you specified.": 0.5,
+            "Tokens: 113 in, 44 out": 0.5,
+            "A": 0.75
+          },
+          "metadata_baseline_status": "no_consensus",
+          "metadata_correct_answer_idx": 1,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "Which of the following procedures would an auditor generally perform regarding subsequent events?\nA. Inspect inventory items that were ordered before the year end but arrived after the year end.\nB. Test internal control activities that were previously reported to management as inadequate.\nC. Review the client's cutoff bank statements for several months after the year end.\nD. Compare the latest available interim financial statements with the statements being audited.",
+          "output": "Compare the latest available interim financial statements with the statements being audited.",
+          "predict_baseline": "A",
+          "predict_our_method": "A",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": true,
+          "metadata_qs_confidence_field": {
+            "A": 1.9,
+            "D": 0.9
+          },
+          "metadata_baseline_status": "consensus",
+          "metadata_correct_answer_idx": 3,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "The FASB makes changes to the Accounting Standards Codification by issuing\nA. Accounting Standards Updates.\nB. Emerging Issues Task Force Releases.\nC. Statements of Financial Accounting Standards.\nD. Staff Technical Bulletins.",
+          "output": "Accounting Standards Updates.",
+          "predict_baseline": "A",
+          "predict_our_method": "A",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": true,
+          "metadata_qs_confidence_field": {
+            "A": 1.95,
+            "C": 1.0
+          },
+          "metadata_baseline_status": "consensus",
+          "metadata_correct_answer_idx": 0,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "An investment project costing $500 today will generate profits of $500 in year five and year ten. If the discount rate is 10%, what is the project’s NPV?\nA. −$3\nB. −$27\nC. $3\nD. $500",
+          "output": "$3",
+          "predict_baseline": "D",
+          "predict_our_method": "A",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": true,
+          "metadata_qs_confidence_field": {
+            "C": 0.95,
+            "A": 1.95
+          },
+          "metadata_baseline_status": "consensus",
+          "metadata_correct_answer_idx": 2,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "On July 1 year 7 Dean Co. issued at a premium bonds with a due date of July 1 year 12. Dean incorrectly used the straight-line method instead of the effective interest method to amortize the premium. How were the following amounts affected by the error at June 30 year 12? Bond carrying Retained amount earnings\nA. Overstated Understated\nB. Understated Overstated\nC. Overstated No effect\nD. No effect No effect",
+          "output": "No effect No effect",
+          "predict_baseline": "A",
+          "predict_our_method": "A",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": true,
+          "metadata_qs_confidence_field": {
+            "A": 1.95,
+            "Tokens: 167 in, 500 out": 0.5
+          },
+          "metadata_baseline_status": "no_consensus",
+          "metadata_correct_answer_idx": 3,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "What is the price of a three-year bond (face value $100), paying 5% coupons, with a yield of 6%?\nA. $100\nB. $104.29\nC. $96.71\nD. $97.33",
+          "output": "$97.33",
+          "predict_baseline": "D",
+          "predict_our_method": "D",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": true,
+          "metadata_qs_confidence_field": {
+            "D": 1.9,
+            "B": 1.0
+          },
+          "metadata_baseline_status": "no_consensus",
+          "metadata_correct_answer_idx": 3,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "A company recently moved to a new building. The old building is being actively marketed for sale, and the company expects to complete the sale in four months. Each of the following statements is correct regarding the old building, except:\nA. It will be reclassified as an asset held for sale.\nB. It will be classified as a current asset.\nC. It will no longer be depreciated.\nD. It will be valued at historical cost.",
+          "output": "It will be valued at historical cost.",
+          "predict_baseline": "Tokens: 142 in, 40 out",
+          "predict_our_method": "C",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": true,
+          "metadata_qs_confidence_field": {
+            "Tokens: 142 in, 47 out": 0.5,
+            "A": 0.95,
+            "Tokens: 142 in, 66 out": 0.5
+          },
+          "metadata_baseline_status": "no_consensus",
+          "metadata_correct_answer_idx": 3,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "Carson owned 40% of the outstanding stock of a C corporation. During a tax year, the corporation reported $400,000 in taxable income and distributed a total of $70,000 in cash dividends to its shareholders. Carson accurately reported $28,000 in gross income on Carson’s individual tax return. If the corporation had been an S corporation and the distributions to the owners had been proportionate, how much income would Carson have reported on Carson’s individual return?\nA. $28,000\nB. $132,000\nC. $160,000\nD. $188,000",
+          "output": "$160,000",
+          "predict_baseline": "A",
+          "predict_our_method": "B",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": true,
+          "metadata_qs_confidence_field": {
+            "B": 1.0,
+            "A": 1.9
+          },
+          "metadata_baseline_status": "consensus",
+          "metadata_correct_answer_idx": 2,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "An investment will pay out $10 p.a. forever. What is that investment worth if the market discount rate is 5%?\nA. $100\nB. $2\nC. $500\nD. $200",
+          "output": "$200",
+          "predict_baseline": "A",
+          "predict_our_method": "A",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": false,
+          "metadata_qs_confidence_field": {
+            "A": 2.0,
+            "C": 0.95
+          },
+          "metadata_baseline_status": "consensus",
+          "metadata_correct_answer_idx": 3,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "Smith has an adjusted gross income (AGI) of $120,000 without taking into consideration $40,000 of losses from rental real estate activities. Smith actively participates in the rental real estate activities. What amount of the rental losses may Smith deduct in determining taxable income?\nA. $0\nB. $15,000\nC. $20,000\nD. $40,000",
+          "output": "$15,000",
+          "predict_baseline": "A",
+          "predict_our_method": "A",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": false,
+          "metadata_qs_confidence_field": {
+            "A": 2.0,
+            "B": 0.95
+          },
+          "metadata_baseline_status": "consensus",
+          "metadata_correct_answer_idx": 1,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "Which of the following is an element of a CPA firm's quality control policies and procedures applicable to the firm's accounting and auditing practice?\nA. Engagement performance.\nB. Risk analysis.\nC. Safeguarding of assets.\nD. Information processing.",
+          "output": "Engagement performance.",
+          "predict_baseline": "in the specified format.",
+          "predict_our_method": "B",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": true,
+          "metadata_qs_confidence_field": {
+            "B": 1.85,
+            "C": 0.9
+          },
+          "metadata_baseline_status": "no_consensus",
+          "metadata_correct_answer_idx": 0,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "A company predicted that it would manufacture 10,000 units of finished goods during March. The direct labor standards indicated that each unit of finished goods requires 2.4 direct labor hours at a standard wage of $20 per hour, totaling $48.00 per finished good unit. During March, the company actually made 9,000 units of finished goods. Production used 2.5 labor hours per finished unit, and the company actually paid $21 per hour, totaling $52.50 per unit of finished product. What amount is the company's direct labor rate variance for March?\nA. $18,000\nB. $22,500\nC. $25,000\nD. $40,500",
+          "output": "$22,500",
+          "predict_baseline": "A",
+          "predict_our_method": "A",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": true,
+          "metadata_qs_confidence_field": {
+            "A": 1.95,
+            "C": 0.9
+          },
+          "metadata_baseline_status": "consensus",
+          "metadata_correct_answer_idx": 1,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "The full-employment gross domestic product is $1.3 trillion, and the actual gross domestic product is $1.2 trillion. The marginal propensity to consume is 0.8. When inflation is ignored, what increase in government expenditures is necessary to produce full employment?\nA. $100 billion\nB. $80 billion\nC. $20 billion\nD. $10 billion",
+          "output": "$20 billion",
+          "predict_baseline": "A",
+          "predict_our_method": "A",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": false,
+          "metadata_qs_confidence_field": {
+            "A": 2.0,
+            "C": 0.95
+          },
+          "metadata_baseline_status": "consensus",
+          "metadata_correct_answer_idx": 2,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "Which of the following types of audit evidence provides the least assurance of reliability?\nA. Receivable confirmations received from the client’s customers.\nB. Prenumbered receiving reports completed by the client’s employees.\nC. Prior months’ bank statements obtained from the client.\nD. Municipal property tax bills prepared in the client’s name.",
+          "output": "Prenumbered receiving reports completed by the client’s employees.",
+          "predict_baseline": "D",
+          "predict_our_method": "C",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": true,
+          "metadata_qs_confidence_field": {
+            "C": 1.6,
+            "<single letter A/B/C/D>": 0.5
+          },
+          "metadata_baseline_status": "consensus",
+          "metadata_correct_answer_idx": 1,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "During year 2 Pipp Co. incurred the following costs to develop and produce a routine low-risk computer software product: Completion of detailed program design $10000 Costs incurred for coding and testing to establish technological feasibility $15000 Other coding and testing costs incurred after establishment of technological feasibility $44000 In Pipp's December 31 year 2 balance sheet what amount should be capitalized as software cost?\nA. $10,000\nB. $25,000\nC. $44,000\nD. 59000",
+          "output": "$44,000",
+          "predict_baseline": "C",
+          "predict_our_method": "A",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": false,
+          "metadata_qs_confidence_field": {
+            "A": 2.0,
+            "B": 1.0
+          },
+          "metadata_baseline_status": "consensus",
+          "metadata_correct_answer_idx": 2,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "During an engagement to compile the financial statements of a nonissuer an accountant becomes aware that management had stated land at appraised value and that if GAAP had been followed both the land account and stockholders' equity would have been decreased by $1 million a material amount. The accountant decides to modify the standard compilation report because management will not revise the financial statements. Under these circumstances the accountant should\nA. Issue either an adverse opinion or a qualified opinion depending on materiality because of the departure from GAAP.\nB. Add a separate paragraph to the accountant's report that restricts the distribution of the financial statements to ‚Äúinternal use only.‚Äù\nC. Add a separate paragraph to the accountant's report that discloses the departure from GAAP and its effects on the financial statements.\nD. Add a separate paragraph to the accountant's report that explains the underlying purpose of recording assets at historical cost.",
+          "output": "Add a separate paragraph to the accountant's report that discloses the departure from GAAP and its effects on the financial statements.",
+          "predict_baseline": "A",
+          "predict_our_method": "A",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": false,
+          "metadata_qs_confidence_field": {
+            "A": 2.9
+          },
+          "metadata_baseline_status": "consensus",
+          "metadata_correct_answer_idx": 2,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "Under the Sales Article of the UCC, which of the following circumstances best describes how the implied warranty of fitness for a particular purpose arises in a sale of goods transaction?\nA. The buyer is purchasing the goods for a particular purpose and is relying on the seller’s skill or judgment to select suitable goods.\nB. The buyer is purchasing the goods for a particular purpose and the seller is a merchant in such goods.\nC. The seller knows the particular purpose for which the buyer will use the goods and knows the buyer is relying on the seller’s skill or judgment to select suitable goods.\nD. The seller knows the particular purpose for which the buyer will use the goods and the seller is a merchant in such goods.",
+          "output": "The seller knows the particular purpose for which the buyer will use the goods and knows the buyer is relying on the seller’s skill or judgment to select suitable goods.",
+          "predict_baseline": "A",
+          "predict_our_method": "C",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": false,
+          "metadata_qs_confidence_field": {
+            "C": 2.8499999999999996
+          },
+          "metadata_baseline_status": "consensus",
+          "metadata_correct_answer_idx": 2,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "Before accepting an audit engagement a CPA should evaluate whether conditions exist that raise questions as to the integrity of management. Which of the following conditions most likely would raise such questions?\nA. There are significant differences between the entity's forecasted financial statements and the financial statements to be audited.\nB. The CPA will not be permitted to have access to sensitive information regarding the salaries of senior management.\nC. There have been substantial inventory write-offs just before the year end in each of the past four years.\nD. The CPA becomes aware of the existence of related party transactions while reading the draft financial statements.",
+          "output": "The CPA will not be permitted to have access to sensitive information regarding the salaries of senior management.",
+          "predict_baseline": "A",
+          "predict_our_method": "A",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": true,
+          "metadata_qs_confidence_field": {
+            "A": 1.8,
+            "D": 0.92
+          },
+          "metadata_baseline_status": "consensus",
+          "metadata_correct_answer_idx": 1,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "method_name": "QuorumSensingConsensus",
+    "description": "Hierarchical LLM consensus with dual-threshold quorum-sensing",
+    "parameters": {
+      "consensus_threshold": 2.0,
+      "veto_threshold": 1.5,
+      "field_decay": 0.9
+    },
+    "summary_metrics": {
+      "num_examples": 20,
+      "qs_accuracy": 0.15,
+      "baseline_accuracy": 0.2,
+      "qs_correct": 3,
+      "baseline_correct": 4,
+      "veto_rate": 0.0,
+      "escalation_rate": 0.65,
+      "total_cost": 4.915499999999997e-06,
+      "budget_limit": 10.0
+    }
+  },
+  "datasets": [
+    {
+      "dataset": "mmlu-hard",
+      "examples": [
+        {
+          "input": "You bought a limousine for $98,000 and are planning to rent it for weddings, ceremonies and parties at $245 per hour. If you estimate the car will be hired for 2 hours a day on average, with daily costs at about $50, what is the estimated yearly yield on your investment if you work all year round, i.e. every day of the year, including any festivities and weekends?\nA. 164%\nB. 1.64%\nC. 0.45%\nD. 183%",
+          "output": "164%",
+          "predict_baseline": "B",
+          "predict_our_method": "C",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": true,
+          "metadata_qs_confidence_field": {
+            "C": 1.9,
+            "B": 0.0
+          },
+          "metadata_baseline_status": "no_consensus",
+          "metadata_correct_answer_idx": 0,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "Arno Co. did not record a credit purchase of merchandise made prior to year end. However the merchandise was correctly included in the year-end physical inventory. What effect did the omission of reporting the purchase of merchandise have on Arno's balance sheet at year end? Assets Liabilities\nA. No effect No effect\nB. No effect Understated\nC. Understated No effect\nD. Understated Understated",
+          "output": "No effect Understated",
+          "predict_baseline": "A",
+          "predict_our_method": "A",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": false,
+          "metadata_qs_confidence_field": {
+            "A": 2.9
+          },
+          "metadata_baseline_status": "consensus",
+          "metadata_correct_answer_idx": 1,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        },
+        {
+          "input": "Which of the following statements about audit sampling risks is correct for a nonissuer?\nA. Nonsampling risk arises from the possibility that, when a substantive test is restricted to a sample, conclusions might be different than if the auditor had tested each item in the population.\nB. Nonsampling risk can arise because an auditor failed to recognize misstatements.\nC. Sampling risk is derived from the uncertainty in applying audit procedures to specific risks.\nD. Sampling risk includes the possibility of selecting audit procedures that are not appropriate to achieve the specific objective.",
+          "output": "Nonsampling risk can arise because an auditor failed to recognize misstatements.",
+          "predict_baseline": "B",
+          "predict_our_method": "A",
+          "metadata_qs_status": "consensus",
+          "metadata_qs_veto_triggered": false,
+          "metadata_qs_escalated": true,
+          "metadata_qs_confidence_field": {
+            "and my confidence level in the format you specified.": 0.5,
+            "Tokens: 113 in, 44 out": 0.5,
+            "A": 0.75
+          },
+          "metadata_baseline_status": "no_consensus",
+          "metadata_correct_answer_idx": 1,
+          "metadata_category": "professional_accounting",
+          "metadata_difficulty": 0.7
+        }
+      ]
+    }
+  ]
+}

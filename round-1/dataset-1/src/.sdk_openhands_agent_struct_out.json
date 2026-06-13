@@ -1,0 +1,15 @@
+{
+  "title": "Benchmark Datasets for Quorum-Sensing Consensus Evaluation: MMLU-Hard, GPQA, TruthfulQA",
+  "layman_summary": "Prepared three standardized question-answering datasets (MMLU-Hard, GPQA, TruthfulQA) with difficulty and contestedness metadata for evaluating LLM consensus mechanisms with veto capabilities.",
+  "summary": "Successfully acquired and processed three benchmark datasets for evaluating hierarchical LLM consensus protocols with confidence-calibrated veto mechanisms. The datasets include: (1) MMLU-Hard (2197 examples from 10 difficult subjects like professional_accounting and conceptual_physics), (2) GPQA (448 graduate-level questions from biology, physics, and chemistry), and (3) TruthfulQA (817 questions testing truthfulness with plausible incorrect answers). All datasets were standardized to a unified JSON schema with fields for id, question, choices, correct_answer, category, difficulty (0-1), contestedness (0-1), and metadata. The contestedness metric was computed as 1 - baseline_accuracy for MMLU-Hard, 1 - expert_accuracy for GPQA, and ratio of plausible incorrect answers for TruthfulQA. Output files include full_data_out.json (3MB, 3462 examples), mini_data_out.json (30KB, 30 examples), and preview_data_out.json (9KB, 9 examples). All files are under the 300MB size limit. The datasets are ready for evaluating quorum-sensing consensus protocols that use confidence calibration and veto mechanisms.",
+  "out_expected_files": {
+    "script": "data.py",
+    "datasets": [
+      {
+        "full": ["full_data_out.json"],
+        "mini": "mini_data_out.json",
+        "preview": "preview_data_out.json"
+      }
+    ]
+  }
+}
